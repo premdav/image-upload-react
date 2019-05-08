@@ -13,12 +13,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      files: []
+      file: []
     };
   }
 
   handleInit() {
     console.log('Filepond instance initialized', this.pond);
+  }
+
+  onUploadPhoto() {
+    
+    console.log('Sent : ', this.state.file.file, ' to server');
   }
   
   render() {
@@ -26,14 +31,16 @@ class App extends React.Component {
       <div className='App'>
         <FilePond ref={ref => this.pond = ref}
           files={this.state.files}
-          allowMultiple={true}
-          maxFiles={3}
+          allowMultiple={false}
+          maxFiles={1}
           oninit={() => this.handleInit()}
           onupdatefiles={fileItems => {
             this.setState({
-              files: fileItems.map(fileItem => fileItem.file)
+              file: fileItems[0]
             });
+            console.log(this.state.file);
           }} />
+          <button onClick={this.onUploadPhoto.bind(this)}>Click to upload</button>
       </div>
     );
   }
